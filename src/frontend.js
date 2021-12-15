@@ -8,8 +8,6 @@ import { useServerResponse } from "./Cache.client";
 lazy(import("./Message.client"));
 lazy(import("./OtherMessage.client"));
 
-const title = "React Server Components in Gutenberg";
-
 const Message = (props) => {
 	const response = useServerResponse(props);
 	return response.readRoot();
@@ -21,10 +19,10 @@ window.addEventListener("DOMContentLoaded", () => {
 		const root = ReactDOM.createRoot(element);
 		root.render(
 			<Suspense fallback={<div className="wp-block-placeholder" />}>
-				<div>
-					<h2>{title}</h2>
-					<Message name="Worlddddd" />
-				</div>
+				<>
+					<h2>Server Components in Gutenberg</h2>
+					<Message name="World" />
+				</>
 			</Suspense>
 		);
 	}

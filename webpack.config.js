@@ -32,6 +32,9 @@ module.exports = [
 			chunkFilename: "[name].chunk.js",
 			path: path.resolve(__dirname, "./build/"),
 			publicPath:
+				// Here you have to set the public path to where your JS assets are
+				// being loaded from so that react knows where to load the chunks for
+				// client components from.
 				"http://blockshydration.local/wp-content/plugins/gutenberg-server-components/build/",
 		},
 	},

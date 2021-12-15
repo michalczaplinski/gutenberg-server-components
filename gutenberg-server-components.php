@@ -57,10 +57,11 @@ function gutenberg_server_component_callback( $request ) {
 	$props = json_decode(stripcslashes($_GET['props']));
 
   $data = <<<STR
-J0:["$","h2",null,{"children":["Hello ", "$props->name", ["$", "@1", null, {"value": "Test"}], ["$", "@2", null, {"value": "Other Test"}]]}]
+J0:["$","div",null,{"children":[["$", "@2", null, {"value": "$props->name"}], ["$", "@3", null, {}]]}]
 STR . chr(0x0A);
-  $data .= 'M1:{"id":"./src/Message.client.js","chunks":["src_Message_client_js"],"name":""}' . chr(0x0A);
-  $data .= 'M2:{"id":"./src/OtherMessage.client.js","chunks":["src_OtherMessage_client_js"],"name":""}'. chr(0x0A);
+
+  $data .= 'M2:{"id":"./src/Message.client.js","chunks":["src_Message_client_js"],"name":""}' . chr(0x0A);
+  $data .= 'M3:{"id":"./src/OtherMessage.client.js","chunks":["src_OtherMessage_client_js"],"name":""}'. chr(0x0A);
 	
 	header("Content-Type: text/plain");
 	header("Status: 200");

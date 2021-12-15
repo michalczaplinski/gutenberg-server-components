@@ -1,10 +1,10 @@
 import React from "react";
 
-const Client = ({ value }) => (
+const Message = ({ value }) => (
 	<div>
-		This is a client component rendered inside of a server component
-		{value}
+		This is a client component rendered inside of a server component: Hello,{" "}
+		{value}!
 	</div>
 );
 
-export default Client;
+export default Message;

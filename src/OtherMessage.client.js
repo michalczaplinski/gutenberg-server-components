@@ -1,10 +1,10 @@
 import React from "react";
 
-const Client2 = ({ value }) => (
+const OtherMessage = () => (
 	<div>
-		This is also a client component rendered inside of a server component
-		{value}
+		This is <span style={{ fontWeight: "bold" }}>also</span> a client component
+		rendered inside of a server component.
 	</div>
 );
 
-export default Client2;
+export default OtherMessage;
