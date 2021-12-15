@@ -6,7 +6,7 @@ import { useServerResponse } from "./Cache.client";
 // You have to import all the client components that are used inside of a server
 // component so that webpack can code-split them into separate chunks.
 lazy(import("./Message.client"));
-lazy(import("./OtherMessage.client"));
+lazy(import("./LastPostTitle.client"));
 
 const Message = (props) => {
 	const response = useServerResponse(props);
@@ -20,8 +20,8 @@ window.addEventListener("DOMContentLoaded", () => {
 		root.render(
 			<Suspense fallback={<div className="wp-block-placeholder" />}>
 				<>
-					<h2>Server Components in Gutenberg</h2>
-					<Message name="World" />
+					<h2>Gutenberg Server Components</h2>
+					<Message name="Michal" />
 				</>
 			</Suspense>
 		);

@@ -56,12 +56,23 @@ function gutenberg_server_component_callback( $request ) {
 
 	$props = json_decode(stripcslashes($_GET['props']));
 
+	// Query Arguments
+	$lastupdated_args = array(
+	'orderby' => 'modified',
+	'order' => 'DESC',
+	'post_status' => 'any',
+	);
+
+	$lastupdated = new WP_Query( $lastupdated_args );
+	$lastupdated->the_post();
+	$title = get_the_title( $lastupdated->post->ID );
+
   $data = <<<STR
-J0:["$","div",null,{"children":[["$", "@2", null, {"value": "$props->name"}], ["$", "@3", null, {}]]}]
+J0:["$","div",null,{"children":[["$", "@2", null, {"value": "$props->name"}], ["$", "@3", null, {"title": "$title"}]]}]
 STR . chr(0x0A);
 
   $data .= 'M2:{"id":"./src/Message.client.js","chunks":["src_Message_client_js"],"name":""}' . chr(0x0A);
-  $data .= 'M3:{"id":"./src/OtherMessage.client.js","chunks":["src_OtherMessage_client_js"],"name":""}'. chr(0x0A);
+  $data .= 'M3:{"id":"./src/LastPostTitle.client.js","chunks":["src_LastPostTitle_client_js"],"name":""}'. chr(0x0A);
 	
 	header("Content-Type: text/plain");
 	header("Status: 200");
