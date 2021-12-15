@@ -14,9 +14,14 @@
 		"packages-update": "wp-scripts packages-update"
 	},
 	"dependencies": {
+		"@babel/preset-env": "^7.16.4",
+		"@babel/preset-react": "^7.16.0",
 		"@wordpress/block-editor": "^8.0.9",
 		"@wordpress/blocks": "^11.1.4",
-		"@wordpress/i18n": "^4.2.4"
+		"@wordpress/i18n": "^4.2.4",
+		"react": "0.0.0-experimental-71d16750c-20211202",
+		"react-dom": "0.0.0-experimental-71d16750c-20211202",
+		"react-server-dom-webpack": "0.0.0-experimental-71d16750c-20211202"
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^19.2.2"

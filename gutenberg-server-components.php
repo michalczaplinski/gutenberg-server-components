@@ -16,10 +16,8 @@
 
 function load_frontend() {
 	$script_path       = 'build/frontend.js';
-	$script_asset_path = 'build/frontend.asset.php';
-	$script_asset      = require( $script_asset_path );
 	$script_url = plugins_url( $script_path, __FILE__ );
-	wp_enqueue_script( 'script', $script_url, $script_asset['dependencies'], $script_asset['version'] );
+	wp_enqueue_script( 'script', $script_url );
 }
 
 
@@ -29,21 +27,16 @@ function render_block_gutenberg_server_components($attributes = [], $content = '
 	}
 
 	$escaped_data_attributes = [];
-
 	foreach ( $attributes as $key => $value ) {
 		if ( is_bool( $value ) ) {
 			$value = $value ? 'true' : 'false';
 		}
-
 		if ( ! is_scalar( $value ) ) {
 			$value = wp_json_encode( $value );
 		}
-
 		$escaped_data_attributes[] = 'data-' . esc_attr( strtolower( preg_replace( '/(?<!\ )[A-Z]/', '-$0', $key ) ) ) . '="' . esc_attr($value) . '"';
 	}
-	
 	$return_val = '<div id="hydrate-block"' . implode( ' ', $escaped_data_attributes ) . '>' . trim( $content ) . '</div>' ;
-		
 	return $return_val;
 }
 
@@ -54,5 +47,37 @@ function create_block_gutenberg_server_components_block_init() {
 	) );
 }
 
+
+// The server component
+
 add_action( 'init', 'create_block_gutenberg_server_components_block_init' );
 
+function gutenberg_server_component_callback( $request ) {
+
+	$props = json_decode(stripcslashes($_GET['props']));
+
+  $data = <<<STR
+J0:["$","h2",null,{"children":["Hello ", "$props->name", ["$", "@1", null, {"value": "Test"}], ["$", "@2", null, {"value": "Other Test"}]]}]
+STR . chr(0x0A);
+  $data .= 'M1:{"id":"./src/Message.client.js","chunks":["src_Message_client_js"],"name":""}' . chr(0x0A);
+  $data .= 'M2:{"id":"./src/OtherMessage.client.js","chunks":["src_OtherMessage_client_js"],"name":""}'. chr(0x0A);
+	
+	header("Content-Type: text/plain");
+	header("Status: 200");
+	echo $data;
+
+}
+
+add_action( 'rest_api_init', function () {
+  register_rest_route( 'gutenberg-server-components/v1', '/server-component', array(
+    'methods' => 'GET',
+    'callback' => 'gutenberg_server_component_callback',
+		'args' => array(
+      'props' => array(
+				'validate_callback' => function($param, $request, $key) {
+          return is_string( $param );
+				}
+      ),
+    ),
+  ));
+});
