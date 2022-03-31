@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useRefresh } from "./Cache.client";
+import { useRefresh } from "../framework/Cache.client";
 
 const LastPostTitle = ({ title }) => {
 	const refresh = useRefresh();

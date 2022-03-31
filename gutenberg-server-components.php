@@ -71,14 +71,16 @@ function gutenberg_server_component_callback( $request ) {
 J0:["$","div",null,{"children":[["$", "@2", null, {"value": "$props->name"}], ["$", "@3", null, {"title": "$title"}]]}]
 STR . chr(0x0A);
 
-  $data .= 'M2:{"id":"./src/Message.client.js","chunks":["src_Message_client_js"],"name":""}' . chr(0x0A);
-  $data .= 'M3:{"id":"./src/LastPostTitle.client.js","chunks":["src_LastPostTitle_client_js"],"name":""}'. chr(0x0A);
+  $data .= 'M2:{"id":"./src/block/Message.client.js","chunks":["src_block_Message_client_js"],"name":""}' . chr(0x0A);
+  $data .= 'M3:{"id":"./src/block/LastPostTitle.client.js","chunks":["src_block_LastPostTitle_client_js"],"name":""}'. chr(0x0A);
 	
 	header("Content-Type: text/plain");
 	header("Status: 200");
 	echo $data;
 
 }
+
+// FRAMEWORK
 
 add_action( 'rest_api_init', function () {
   register_rest_route( 'gutenberg-server-components/v1', '/server-component', array(

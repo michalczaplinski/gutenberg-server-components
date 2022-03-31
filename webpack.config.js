@@ -12,7 +12,7 @@ module.exports = [
 	},
 	{
 		entry: {
-			frontend: path.resolve(__dirname, "./src/frontend.js"),
+			frontend: path.resolve(__dirname, "./src/framework/frontend.js"),
 		},
 		mode: "development",
 		module: {
