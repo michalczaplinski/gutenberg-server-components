@@ -6,9 +6,15 @@
 	"title": "Gutenberg Server Components",
 	"category": "widgets",
 	"icon": "smiley",
-	"description": "Example block written with ESNext standard and JSX support – build step required.",
+	"description": "An example block that shows the title of the latest post from a specific author.",
 	"supports": {
 		"html": false
+	},
+	"attributes": {
+		"author": {
+			"type": "string",
+			"default": "admin"
+		}
 	},
 	"textdomain": "gutenberg-server-components",
 	"editorScript": "file:./build/index.js",

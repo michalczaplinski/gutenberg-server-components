@@ -6,7 +6,7 @@ function load_frontend() {
 	wp_enqueue_script( 'script', $script_url );
 }
 
-function render_block_gutenberg_server_components($attributes = [], $content = '') {
+function render_block_gutenberg_server_components($attributes = []) {
 	if ( ! is_admin() ) {
 		load_frontend();
 	}
@@ -16,20 +16,35 @@ function render_block_gutenberg_server_components($attributes = [], $content = '
 	'orderby' => 'modified',
 	'order' => 'DESC',
 	'post_status' => 'any',
+	'author_name' => $attributes['author'],
 	);
+
+	$escaped_data_attributes = [];
+	foreach ( $attributes as $key => $value ) {
+		if ( is_bool( $value ) ) {
+			$value = $value ? 'true' : 'false';
+		}
+		if ( ! is_scalar( $value ) ) {
+			$value = wp_json_encode( $value );
+		}
+		$escaped_data_attributes[] = 'data-' . esc_attr( strtolower( preg_replace( '/(?<!\ )[A-Z]/', '-$0', $key ) ) ) . '="' . esc_attr($value) . '"';
+	}
+	$escaped_data_attributes = implode( ' ', $escaped_data_attributes );
 
 	$lastupdated = new WP_Query( $lastupdated_args );
 	$lastupdated->the_post();
 	$title = get_the_title( $lastupdated->post->ID );
 
 	$return_val = <<<HTML
-		<div id=hydrate-block >
+		<div id=hydrate-block $escaped_data_attributes>
 			<div>
-					<br />
-					<div>The title of most recently updated post is:</div>
-					<div>
-						<b>$title</b>
-					</div>
+				<br />
+				<div>
+					The title of latest post by {{AuthorInput}} is:
+				</div>
+				<div>
+					<b>$title</b>
+				</div>
 					{{Reload Button}}
 				</div>
 			</div>
@@ -47,37 +62,42 @@ add_action( 'init', 'create_block_gutenberg_server_components_block_init' );
 
 function gutenberg_server_component_callback( $request ) {
 
+	$props = json_decode(stripcslashes($_GET['props']));
+	$author = $props->author;
+
 	// Query Arguments
 	$lastupdated_args = array(
 	'orderby' => 'modified',
 	'order' => 'DESC',
 	'post_status' => 'any',
+	'author_name' => $author,
 	);
 
 	$lastupdated = new WP_Query( $lastupdated_args );
 	$lastupdated->the_post();
 	$title = get_the_title( $lastupdated->post->ID );
 
-	$M1 = <<<STR
-	M1:{"id":"./src/block/ReloadButton.client.js","chunks":["src_block_ReloadButton_client_js"],"name":""}
-	STR;
-
+	$M1 = 'M1:{"id":"./src/block/AuthorInput.client.js","chunks":["src_block_AuthorInput_client_js"],"name":""}';
+	$M2 = 'M2:{"id":"./src/block/ReloadButton.client.js","chunks":["src_block_ReloadButton_client_js"],"name":""}';
+	
 	$J0 = <<<STR
 	J0:["$","div",null,{"children":[
 		["$","br",null,{}],
-		["$","div",null,{"children":
-			"The title of most recently updated post is:"
-		}],
+		["$","div",null,{"children": [
+			"The title of latest post by", 
+			" ",
+			["$","@1",null,{"author": "$author"}],
+			" is:"
+		]}],
 		["$","div",null,{"children":
 			["$","b",null,{"children": "$title"}]
 		}],
-		["$","@1",null,{}]
+		["$","@2",null,{}]
 	]}]
 	STR;
-	
 	$J0 = preg_replace("/\n+/", "", $J0);
-	$data = $M1 . chr(0x0A) . $J0 . chr(0x0A);
 
+	$data = $M1 . chr(0x0A) . $M2 . chr(0x0A) . $J0 . chr(0x0A);
 	header("Content-Type: text/plain");
 	header("Status: 200");
 	echo $data;

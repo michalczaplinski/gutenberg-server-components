@@ -2,9 +2,12 @@
 use function ServerComponents\LastPostTitle as LastPostTitle;
 
 function Root( $props ) {
+
+	$author = $props->author;
+
 	return <<<HTML
 		<div>
-			{LastPostTitle()}
+			{LastPostTitle($author)}
 		</div>
 	HTML;
 }

@@ -1,15 +1,17 @@
 <?php
 namespace ServerComponents;
 
-// import ReloadButton from "./ReloadButton.client";
+import ReloadButton from "./ReloadButton.client";
+import AuthorInput from "./AuthorInput.client";
 
-function LastPostTitle( $props ) {
+function LastPostTitle( $author ) {
 
 	// Query Arguments
 	$lastupdated_args = array(
 	'orderby' => 'modified',
 	'order' => 'DESC',
 	'post_status' => 'any',
+	'author_name' => $author,
 	);
 
 	$lastupdated = new WP_Query( $lastupdated_args );
@@ -19,7 +21,9 @@ function LastPostTitle( $props ) {
 	return <<<HTML
 		<div>
 			<br />
-			<div>The title of most recently updated post is:</div>
+			<div>
+				The title of latest post by <AuthorInput author="$author" /> is:
+			</div>
 			<div>
 				<b>{$title}</b>
 			</div>
