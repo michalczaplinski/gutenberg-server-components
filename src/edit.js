@@ -6,8 +6,7 @@ export default function Edit() {
 		<ServerSideRender
 			block="michal/gutenberg-server-components"
 			attributes={{
-				showPostCounts: true,
-				displayAsDropdown: false,
+				author: "admin",
 			}}
 		/>
 	);
