@@ -5,7 +5,7 @@ import React, {
 	useContext,
 	useState,
 } from "react";
-import ReactDOM from "react-dom";
+import { hydrateRoot } from "react-dom/client";
 
 import { useServerResponse } from "./Cache.client";
 
@@ -35,7 +35,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	const attributes = Object.assign({}, element.dataset);
 
 	if (element) {
-		ReactDOM.hydrateRoot(
+		hydrateRoot(
 			element,
 			<Suspense fallback={null}>
 				<App {...attributes} />

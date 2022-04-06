@@ -21,9 +21,9 @@
 		"@wordpress/blocks": "^11.1.4",
 		"@wordpress/i18n": "^4.2.4",
 		"@wordpress/server-side-render": "^3.3.0",
-		"react": "0.0.0-experimental-71d16750c-20211202",
-		"react-dom": "0.0.0-experimental-71d16750c-20211202",
-		"react-server-dom-webpack": "0.0.0-experimental-71d16750c-20211202"
+		"react": "0.0.0-experimental-af730436c-20220405",
+		"react-dom": "0.0.0-experimental-af730436c-20220405",
+		"react-server-dom-webpack": "0.0.0-experimental-af730436c-20220405"
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^19.2.2"
