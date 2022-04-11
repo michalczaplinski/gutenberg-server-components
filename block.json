@@ -1,14 +1,20 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
 	"apiVersion": 2,
-	"name": "create-block/gutenberg-server-components",
+	"name": "michal/gutenberg-server-components",
 	"version": "0.1.0",
 	"title": "Gutenberg Server Components",
 	"category": "widgets",
 	"icon": "smiley",
-	"description": "Example block written with ESNext standard and JSX support – build step required.",
+	"description": "An example block that shows the title of the latest post from a specific author.",
 	"supports": {
 		"html": false
+	},
+	"attributes": {
+		"author": {
+			"type": "string",
+			"default": "admin"
+		}
 	},
 	"textdomain": "gutenberg-server-components",
 	"editorScript": "file:./build/index.js",
