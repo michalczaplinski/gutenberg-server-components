@@ -1,4 +1,18 @@
 <?php
+/**
+ * Plugin Name:       Gutenberg Server Components
+ * Description:       Example block that explores the user of React Server
+ * Components in Gutenberg.
+ * Requires at least: 5.8
+ * Requires PHP:      7.0
+ * Version:           0.1.0
+ * Author:            Michal Czaplinski
+ * License:           GPL-2.0-or-later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:       gutenberg-server-components
+ *
+ * @package           react-server-components
+ */
 
 function load_frontend() {
 	$script_path       = 'build/frontend.js';

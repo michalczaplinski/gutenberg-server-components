@@ -35,7 +35,7 @@ module.exports = [
 				// Here you have to set the public path to where your JS assets are
 				// being loaded from so that react knows where to load the chunks for
 				// client components from.
-				"http://blockhydrationexperiment.local/wp-content/plugins/gutenberg-server-components/build/",
+				"http://gutenbergservercomponents.local/wp-content/plugins/gutenberg-server-components/build/",
 		},
 	},
 ];
